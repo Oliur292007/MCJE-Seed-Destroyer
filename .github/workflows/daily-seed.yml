@@ -1,8 +1,9 @@
+
 name: Minecraft JE Seed Destroyer
 
 on:
-  #schedule:
-    #- cron: "50 * * * *"
+  schedule:
+    - cron: "30 */3 * * *"
   workflow_dispatch:
 
 permissions:
@@ -18,7 +19,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Get repository files
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -37,7 +38,6 @@ jobs:
           if [ -n "$(git status --porcelain -- posted_seeds.txt)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
             git add posted_seeds.txt
             git commit -m "Update Java seed history"
             git push
