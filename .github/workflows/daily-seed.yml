@@ -1,5 +1,4 @@
-
-name: Hourly MCPE/Bedrock Seed Hunter
+name: Minecraft JE Seed Destroyer
 
 on:
   #schedule:
@@ -10,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: daily-bedrock-seed
+  group: java-seed-destroyer
   cancel-in-progress: false
 
 jobs:
@@ -27,7 +26,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Publish daily seed
+      - name: Run Minecraft JE Seed Destroyer
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           MINECRAFT_ROLE_ID: ${{ secrets.MINECRAFT_ROLE_ID }}
@@ -38,7 +37,8 @@ jobs:
           if [ -n "$(git status --porcelain -- posted_seeds.txt)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
             git add posted_seeds.txt
-            git commit -m "Update posted seed history"
+            git commit -m "Update Java seed history"
             git push
           fi
